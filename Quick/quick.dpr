@@ -95,7 +95,7 @@ BEGIN
     if FileExists(inputname) then
     begin
       ReadMassivFromFile(inputname, b, n);
-      if n<=0 then Writeln('Неправильный массив')
+      if (n<=0) or (n>99999999) then Writeln('Неправильный массив')
       else
       begin
       T := Now;
@@ -118,7 +118,7 @@ BEGIN
     if FileExists(inputname) then
     begin
       ReadMassivFromFile(inputname, b, n);
-      if n<=0 then Writeln('Неправильный массив')
+      if (n<=0) or (n>99999999) then Writeln('Неправильный массив')
       else
       begin
       write('vvedite imya vihodnogo faila vida IMYA:');

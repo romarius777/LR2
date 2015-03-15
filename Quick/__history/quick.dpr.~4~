@@ -1,4 +1,4 @@
-program heap;
+program quick;
 
 {$APPTYPE CONSOLE}
 
@@ -52,47 +52,37 @@ begin
 
 end;
 
-procedure HeapSort(var a: massiv; n: integer);
-  procedure sift(L, R: integer);
+procedure QuickSort(var a: massiv; n: integer);
+  procedure sort(L, R: integer);
   var
     i, j: integer;
-    x: integer;
+    w, x: integer;
   begin
     i := L;
-    j := 2 * i;
-    x := a[i];
-    if (j < R) and (a[j] < a[j + 1]) then
-      j := j + 1;
-    while (j <= R) and (x < a[j]) do
-    begin
-      a[i] := a[j];
-      i := j;
-      j := 2 * j;
-      if (j < R) and (a[j] < a[j + 1]) then
-        j := j + 1;
-    end;
-    a[i] := x;
+    j := R;
+    x := a[(L + R) div 2];
+    repeat
+      while a[i] < x do
+        i := i + 1;
+      while x < a[j] do
+        j := j - 1;
+      if i <= j then
+      begin
+        w := a[i];
+        a[i] := a[j];
+        a[j] := w;
+        i := i + 1;
+        j := j - 1;
+      end;
+    until i > j;
+    if L < j then
+      sort(L, j);
+    if i < R then
+      sort(i, R);
   end;
 
-var
-  L, R: integer;
-  x: integer;
 begin
-  L := (n div 2) + 1;
-  R := n;
-  while L > 1 do
-  begin
-    L := L - 1;
-    sift(L, R);
-  end;
-  while R > 1 do
-  begin
-    x := a[1];
-    a[1] := a[R];
-    a[R] := x;
-    R := R - 1;
-    sift(L, R);
-  end;
+  sort(1, n);
 end;
 
 BEGIN
@@ -105,15 +95,15 @@ BEGIN
     if FileExists(inputname) then
     begin
       ReadMassivFromFile(inputname, b, n);
-      if (n<=0) or (n>99999999) then Writeln('Неправильный массив')
+      if n<=0 then Writeln('Неправильный массив')
       else
       begin
       T := Now;
-      HeapSort(b, n);
+      QuickSort(b, n);
       T := Now - T;
       DecodeTime(T, myHour, myMin, mySec, myMilli);
       TSum := myMilli / 1000 + mySec + myMin * 60 + myHour * 3600;
-      WriteToFile(b, n, outputname, 'Пирамидальная', TSum);
+      WriteToFile(b, n, outputname, 'Быстрая', TSum);
       writeln('rabota prog zakonchena.sozdan file:', outputname);
       end;
     end
@@ -128,23 +118,22 @@ BEGIN
     if FileExists(inputname) then
     begin
       ReadMassivFromFile(inputname, b, n);
-      if (n<=0) or (n>99999999) then Writeln('Неправильный массив')
+      if n<=0 then Writeln('Неправильный массив')
       else
       begin
       write('vvedite imya vihodnogo faila vida IMYA:');
       readln(outputname);
       T := Now;
-      HeapSort(b, n);
+      QuickSort(b, n);
       T := Now - T;
       DecodeTime(T, myHour, myMin, mySec, myMilli);
       TSum := myMilli / 1000 + mySec + myMin * 60 + myHour * 3600;
-      WriteToFile(b, n, outputname, 'Пирамидальная', TSum);
+      WriteToFile(b, n, outputname, 'Быстрая', TSum);
       writeln('rabota prog zakonchena.sozdan file:', outputname);
       end;
     end
     else
       writeln('takogo file ne suchest.zapustite eche raz i vpishite pravilno');
-
     readln;
   end;
 
