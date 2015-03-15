@@ -1,0 +1,150 @@
+program shell;
+
+{$APPTYPE CONSOLE}
+
+uses
+  SysUtils;
+
+type
+  massiv = array [1 .. 99999999] of integer;
+
+var
+  inputname, outputname: string;
+  a, b: massiv;
+  i, n, p: integer;
+  TSum: double;
+  T: TDateTime;
+  myHour, myMin, mySec, myMilli: word;
+
+procedure WriteToFile(var a: massiv; n: integer; f: string; f1: string;
+  time: double);
+var
+  i: integer;
+  k: text;
+begin
+  assign(k, f);
+  rewrite(k);
+  writeln(k, n);
+
+  for i := 1 to n do
+    write(k, a[i], ' ');
+  writeln(k);
+  writeln(k, f1);
+  write(k, floattostr(time));
+  close(k);
+end;
+
+procedure ReadMassivFromFile(f: string; var a: massiv; var n: integer);
+{ f-входное имя файла,А-выходной массив }
+var
+  i: integer;
+  k: text;
+begin
+
+  assign(k, f);
+  reset(k);
+  readln(k, n);
+
+  for i := 1 to n do
+    read(k, a[i]);
+
+  close(k);
+
+end;
+
+procedure ShellSort(var a: massiv; n: integer);
+var
+  i, j, k, m: integer;
+  x: integer;
+  T: word;
+  h: array of LongWord;
+
+begin
+  T := 1;
+  SetLength(h, T + 1);
+  h[1] := 1;
+  while h[T] < n do
+  begin
+    T := T + 1;
+    SetLength(h, T + 1);
+    h[T] := h[T - 1] * 3 + 1;
+  end;
+  T := T - 1;
+  SetLength(h, T + 1);
+  for m := T downto 1 do
+  begin
+    k := h[m];
+    for i := k + 1 to n do
+    begin
+      x := a[i];
+      j := i - k;
+      while (j > k) and (x < a[j]) do
+      begin
+        a[j + k] := a[j];
+        j := j - k;
+      end;
+      if (j > k) or (x >= a[j]) then
+        a[j + k] := x
+      else
+      begin
+        a[j + k] := a[j];
+        a[j] := x;
+      end;
+    end;
+  end;
+end;
+
+
+BEGIN
+
+  inputname := paramstr(1);
+  outputname := paramstr(2);
+
+  if paramcount > 0 then
+  begin
+    if FileExists(inputname) then
+    begin
+      ReadMassivFromFile(inputname, b, n);
+      if n<=0 then Writeln('Nepraviln massiv')
+      else
+      begin
+      T := Now;
+      ShellSort(b, n);
+      T := Now - T;
+      DecodeTime(T, myHour, myMin, mySec, myMilli);
+      TSum := myMilli / 1000 + mySec + myMin * 60 + myHour * 3600;
+      WriteToFile(b, n, outputname, 'Шелла', TSum);
+      writeln('rabota prog zakonchena.sozdan file:', outputname);
+      end;
+    end
+    else
+      writeln('takogo file ne suchest.zapustite eche raz i vpishite pravilno');
+
+  end
+  else
+  begin
+    write('vvedite imya vxodnogo faila vida IMYA:');
+    readln(inputname);
+    if FileExists(inputname) then
+    begin
+      write('vvedite imya vihodnogo faila vida IMYA:');
+      readln(outputname);
+      ReadMassivFromFile(inputname, b, n);
+      if n<=0 then Writeln('Nepraviln massiv')
+      else
+      begin
+      T := Now;
+      ShellSort(b, n);
+      T := Now - T;
+      DecodeTime(T, myHour, myMin, mySec, myMilli);
+      TSum := myMilli / 1000 + mySec + myMin * 60 + myHour * 3600;
+      WriteToFile(b, n, outputname, 'Шелла', TSum);
+      writeln('rabota prog zakonchena.sozdan file:', outputname);
+      end;
+    end
+    else
+      writeln('takogo file ne suchest.zapustite eche raz i vpishite pravilno');
+    readln;
+  end;
+
+END.

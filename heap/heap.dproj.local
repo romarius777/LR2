@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>1899.12.30 00:00:00.000.bdsproj,C:\Users\Рома\Documents\Borland Studio Projects\Project1.bdsproj=G:\4 семестр\5Дополнительные главы информатики\ерунда\Project1.bdsproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.bdsproj,G:\4 семестр\5Дополнительные главы информатики\ерунда\сортировка шелла\Project1.bdsproj=G:\4 семестр\5Дополнительные главы информатики\ерунда\пирамида\Project1.bdsproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.bdsproj,G:\4 семестр\5Дополнительные главы информатики\ерунда\пирамида\Project1.bdsproj=G:\4 семестр\5Дополнительные главы информатики\ерунда\пирамида\heap\heap.bdsproj</Transaction>
+    <Transaction>1899.12.30 00:00:00.000.bdsproj,G:\4 семестр\5Дополнительные главы информатики\ерунда\Project1.bdsproj=G:\4 семестр\5Дополнительные главы информатики\ерунда\сортировка шелла\Project1.bdsproj</Transaction>
+  </Transactions>
+</BorlandProject>
