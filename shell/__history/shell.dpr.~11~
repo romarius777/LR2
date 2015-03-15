@@ -114,7 +114,6 @@ BEGIN
       ReadMassivFromFile(inputname, b, n);
       if (n<=0) or (n>99999999) then Exit else
      begin
-      Writeln('OK');
       T := Now;
       ShellSort(b, n);
       T := Now - T;

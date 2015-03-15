@@ -44,11 +44,17 @@ begin
   assign(k, f);
   reset(k);
   readln(k, n);
-
+  if (n<=0) or (n>99999999) then
+  begin
+   Writeln('Неправильный массив');
+   readln;
+   end
+  else
+  begin
   for i := 1 to n do
     read(k, a[i]);
-
   close(k);
+  end;
 
 end;
 
@@ -104,10 +110,11 @@ BEGIN
   begin
     if FileExists(inputname) then
     begin
+      write('Podojdite,proverka faila:');
       ReadMassivFromFile(inputname, b, n);
-      if (n<=0) or (n>99999999) then Writeln('Неправильный массив')
-      else
-      begin
+      if (n<=0) or (n>99999999) then Exit else
+     begin
+      Writeln('OK');
       T := Now;
       HeapSort(b, n);
       T := Now - T;
@@ -127,10 +134,11 @@ BEGIN
     readln(inputname);
     if FileExists(inputname) then
     begin
+       write('Podojdite,proverka faila:');
       ReadMassivFromFile(inputname, b, n);
-      if (n<=0) or (n>99999999) then Writeln('Неправильный массив')
-      else
-      begin
+      if (n<=0) or (n>99999999) then Exit else
+     begin
+      Writeln('OK');
       write('vvedite imya vihodnogo faila vida IMYA:');
       readln(outputname);
       T := Now;

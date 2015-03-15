@@ -110,11 +110,7 @@ BEGIN
   begin
     if FileExists(inputname) then
     begin
-      write('Podojdite,proverka faila:');
       ReadMassivFromFile(inputname, b, n);
-      if (n<=0) or (n>99999999) then Exit else
-     begin
-      Writeln('OK');
       T := Now;
       ShellSort(b, n);
       T := Now - T;
@@ -122,7 +118,7 @@ BEGIN
       TSum := myMilli / 1000 + mySec + myMin * 60 + myHour * 3600;
       WriteToFile(b, n, outputname, 'Шелла', TSum);
       writeln('rabota prog zakonchena.sozdan file:', outputname);
-     end;
+
     end
     else
       writeln('takogo file ne suchest.zapustite eche raz i vpishite pravilno');
